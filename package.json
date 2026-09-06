@@ -1,0 +1,35 @@
+{
+  "name": "blueoak-ventures",
+  "version": "0.1.0",
+  "private": true,
+  "author": "Shreya Joshi, Chinmay Joshi",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "generate:images": "node ./tools/generate-images.js"
+  },
+  "dependencies": {
+    "dompurify": "^3.0.7",
+    "framer-motion": "^11.3.8",
+    "lucide-react": "^0.400.0",
+    "marked": "^5.1.0",
+    "next": "14.2.5",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.20",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
+    "postcss": "^8",
+    "sharp": "^0.32.0",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}

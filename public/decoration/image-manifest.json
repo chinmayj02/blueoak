@@ -1,0 +1,54 @@
+{
+  "know-your-funding-element-highRes": {
+    "src": "/decoration/know-your-funding-element-highRes.png",
+    "variants": [
+      {
+        "width": 420,
+        "png": "/decoration/know-your-funding-element-highRes-420.png",
+        "webp": "/decoration/know-your-funding-element-highRes-420.webp"
+      },
+      {
+        "width": 768,
+        "png": "/decoration/know-your-funding-element-highRes-768.png",
+        "webp": "/decoration/know-your-funding-element-highRes-768.webp"
+      },
+      {
+        "width": 1024,
+        "png": "/decoration/know-your-funding-element-highRes-1024.png",
+        "webp": "/decoration/know-your-funding-element-highRes-1024.webp"
+      },
+      {
+        "width": 1400,
+        "png": "/decoration/know-your-funding-element-highRes-1400.png",
+        "webp": "/decoration/know-your-funding-element-highRes-1400.webp"
+      }
+    ],
+    "placeholder": "data:image/webp;base64,UklGRkACAABXRUJQVlA4WAoAAAAQAAAAEwAAFQAAQUxQSAYBAAABkGLbtmpH+74bZlbs0ZFn5ihmBpk2sI3KiMyIYyyQ1QBmkMz09v7/FoRbEBETgGtoLsPDJRobeTGLuSlYIOQ8FhWuEhYm+SyTEB5990EoDOLCrf3Pi06ITr/hBmGRkAgYY4DUFINV51pg0lKA9SJ4JjkaSL/580mOSYw1SHJ7XlxcEiw6PrxpRYznIfc1P9151QCLjLtuC8ZDdntpUKJbQyhWHWsQFoYVt/FT/i99KMTYb3c7zGJo88CJIn3X2fdDbhaRfWvO52/9z29BBb+X5c4/fPmbokRJAZ/Br8/ffP0akMRTRUoBJ18+SUqkTvd9nq7TSVISRZ1KnkbxFFL871RSEiUCVlA4IBQBAADQBwCdASoUABYAPu1mqk8ppaOiKA1RMB2JbACsMoR138+dEurht9s7zy2mk7vaRWAXlfKwgTYMLYWJjX6cBacM0TlGiYRbQAD+0x31G6v6mOQKvhcMftvyC0120GRPHp+2gOI1/DexGWR4sCK2yrQDMj7svGEkRHg63wG3jmUkr+4JmG0vvqU2KYRyBt6plF2U65sHJW4q50Jur5pIgCaaVWvDiCKiTDQKForzC29mUbabnh+D1a25nQWmsLpocSilQAVuOd/JvWZhb2Rr4Pzrmdi3LdW1qmkPQ/t++Vn54HjyoUA3tr0q3Q6SZ+IHcoCTQXzPL50uFe64DMaO4kf1iwY3VwPXWfvzYu92+/AAEAIgAAA="
+  },
+  "know-your-funding-element-highResLandscape": {
+    "src": "/decoration/know-your-funding-element-highResLandscape.png",
+    "variants": [
+      {
+        "width": 420,
+        "png": "/decoration/know-your-funding-element-highResLandscape-420.png",
+        "webp": "/decoration/know-your-funding-element-highResLandscape-420.webp"
+      },
+      {
+        "width": 768,
+        "png": "/decoration/know-your-funding-element-highResLandscape-768.png",
+        "webp": "/decoration/know-your-funding-element-highResLandscape-768.webp"
+      },
+      {
+        "width": 1024,
+        "png": "/decoration/know-your-funding-element-highResLandscape-1024.png",
+        "webp": "/decoration/know-your-funding-element-highResLandscape-1024.webp"
+      },
+      {
+        "width": 1400,
+        "png": "/decoration/know-your-funding-element-highResLandscape-1400.png",
+        "webp": "/decoration/know-your-funding-element-highResLandscape-1400.webp"
+      }
+    ],
+    "placeholder": "data:image/webp;base64,UklGRowBAABXRUJQVlA4WAoAAAAQAAAAEwAACgAAQUxQSKkAAAABgFvbtmpln/Nxd9caqMFyizWjAkIqoAONGISkvwncLXJ3jrx7kTdeDRExAchOSKVsBcOVQC5HnKEQ4+tgVJaWETGllJQMyRC4sgw7QyBmYlTVYfWplaoK23vj51JtKQjldeiXaS6o7p5fkPBxudJR1VSFuv3LBvTN3h1sm0m0943PsZZ8nOOZ0+hJYm5qSYjPFzGs5b80UVU3czdVD+YhqKeb/zdzV/FUAFZQOCC8AAAAEAUAnQEqFAALAD7tYqlNqaWjojAIATAdiWwAnTKDIKyATSWRGwuhhlxwyYHdQWwLMAD+4VjTa8ytOR8yBeU39Ikfyu+v3T6YZfBzOOpwqiHgr4l2ybodjCC0gQrrk/Z74Rsa9snL55p3cROkDX7BgCA7wV8c560A7EF3ZTzKme7/vjTsZvxG+1pmkz81Me+SNRJu7omD1T768vyaZ67gLf8G9uE5WZ24gKIGgqBkEHIJU/k3SU12E57YAAA="
+  }
+}
