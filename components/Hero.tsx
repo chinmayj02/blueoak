@@ -54,8 +54,8 @@ export default function Hero() {
   const rightRef    = useRef<HTMLDivElement>(null);
 
   /* Card dimensions derived from the available height */
-  const [cardH, setCardH] = useState(0);
-  const [cardW, setCardW] = useState(0);
+  const [cardH, setCardH] = useState(560);
+  const [cardW, setCardW] = useState(280);
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -236,14 +236,12 @@ export default function Hero() {
             transition: "opacity .8s .22s ease, transform .8s .22s ease",
           }}
         >
-          {cardH > 0 && cardW > 0 && (
-            <HeroCarousel
+          <HeroCarousel
               cardH={cardH}
               cardW={cardW}
               activeIndex={activeIndex}
               onActiveChange={setActiveIndex}
             />
-          )}
         </div>
       </div>
     </section>

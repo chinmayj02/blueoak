@@ -11,12 +11,12 @@ import Image from "next/image";
 import { Menu, X, ArrowRight } from "lucide-react";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "The Bharat Project", href: "#bharat-project" },
-  { label: "Editorial", href: "#editorial" },
-  { label: "Funding Score", href: "#funding-score" },
-  { label: "Services", href: "#services" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home",              href: "#home",          page: false },
+  { label: "The Bharat Project",href: "#bharat-project",page: false },
+  { label: "Editorial",         href: "/editorial",     page: true  },
+  { label: "Funding Score",     href: "#funding-score", page: false },
+  { label: "Services",          href: "#services",      page: false },
+  { label: "Contact",           href: "#contact",       page: false },
 ];
 
 export default function Navbar() {
@@ -125,16 +125,24 @@ export default function Navbar() {
           >
             {navLinks.map((link) => {
               const sectionId = link.href.replace("#", "");
-              const isActive = activeSection === sectionId;
-              return (
+              const isActive  = !link.page && activeSection === sectionId;
+              return link.page ? (
+                /* Page-level navigation — real href, no scroll */
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="relative px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-lg link-underline text-ink-muted hover:text-ink"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                /* Scroll-to-section navigation */
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
                   className={`relative px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-lg link-underline ${
-                    isActive
-                      ? "text-oak-teal"
-                      : "text-ink-muted hover:text-ink"
+                    isActive ? "text-oak-teal" : "text-ink-muted hover:text-ink"
                   }`}
                 >
                   {link.label}
@@ -217,8 +225,20 @@ export default function Navbar() {
           <nav className="flex-1 px-4 py-6 space-y-1" aria-label="Mobile navigation">
             {navLinks.map((link, i) => {
               const sectionId = link.href.replace("#", "");
-              const isActive = activeSection === sectionId;
-              return (
+              const isActive  = !link.page && activeSection === sectionId;
+              return link.page ? (
+                /* Page navigation — real href */
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 text-ink hover:bg-ink/5 hover:text-oak-forest"
+                  style={{ animationDelay: `${i * 50}ms` }}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                /* Scroll navigation */
                 <a
                   key={link.href}
                   href={link.href}

@@ -5,6 +5,7 @@ import Editorial from "@/components/Editorial";
 import FundingScore from "@/components/FundingScore";
 import Services from "@/components/Services";
 import Contact from "@/components/Contact";
+import PartnershipCta from "@/components/PartnershipCta";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
         <FundingScore />
         <Services />
         <Contact />
+        <PartnershipCta />
       </main>
       <Footer />
     </>
