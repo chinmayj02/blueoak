@@ -124,7 +124,7 @@ export default function Stats() {
           observer.disconnect();
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0, rootMargin: "0px 0px -50px 0px" }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();

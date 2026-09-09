@@ -1,184 +1,356 @@
 "use client";
 
 /*
- * Services
- * Purpose: List of services offered with cards and CTAs.
- * Authors: Shreya Joshi, Chinmay Joshi
+ * Services — "Our Solutions"
+ * Design: S-curve journey layout with 4 steps alternating left/right,
+ *         connected by a dashed SVG path. Matches Our_solutions.png reference.
  */
 
 import React, { useEffect, useRef, useState } from "react";
-import SectionHeading from "./SectionHeading";
-import { services } from "@/data/services";
 
-function ServiceCard({
-  service,
+// ── Step data ─────────────────────────────────────────────────────────────────
+const STEPS = [
+  {
+    number: "01",
+    title:  "Acquire Customers",
+    desc:   "Find and win the right customers for your business.",
+    icon: (
+      // People / customer acquisition icon
+      <svg viewBox="0 0 64 64" fill="none" style={{ width: 52, height: 52 }} aria-hidden="true">
+        <circle cx="24" cy="20" r="9" fill="#0D5C63" opacity="0.9" />
+        <ellipse cx="24" cy="42" rx="14" ry="9" fill="#0D5C63" opacity="0.75" />
+        <circle cx="42" cy="24" r="7" fill="#1B7A84" opacity="0.85" />
+        <ellipse cx="42" cy="43" rx="10" ry="7" fill="#1B7A84" opacity="0.65" />
+        {/* + badge */}
+        <circle cx="50" cy="42" r="8" fill="#D89B35" />
+        <path d="M50 38v8M46 42h8" stroke="white" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    number: "02",
+    title:  "Accelerate Growth",
+    desc:   "Scale faster with strategy, partnerships and market access.",
+    icon: (
+      // Bar chart + arrow icon
+      <svg viewBox="0 0 64 64" fill="none" style={{ width: 52, height: 52 }} aria-hidden="true">
+        <rect x="8"  y="38" width="10" height="16" rx="2" fill="#0D5C63" opacity="0.7" />
+        <rect x="22" y="28" width="10" height="26" rx="2" fill="#0D5C63" opacity="0.85" />
+        <rect x="36" y="18" width="10" height="36" rx="2" fill="#0D5C63" />
+        {/* upward arrow */}
+        <path d="M14 24 Q28 8 50 12" stroke="#D89B35" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path d="M44 8 L50 12 L46 18" stroke="#D89B35" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      </svg>
+    ),
+  },
+  {
+    number: "03",
+    title:  "Prepare for Funding",
+    desc:   "Get investment ready with the right strategy, positioning and materials.",
+    icon: (
+      // Document + checkmark icon
+      <svg viewBox="0 0 64 64" fill="none" style={{ width: 52, height: 52 }} aria-hidden="true">
+        <rect x="14" y="8" width="32" height="40" rx="4" fill="#0D5C63" opacity="0.12" stroke="#0D5C63" strokeWidth="1.5" />
+        <path d="M22 20h16M22 28h16M22 36h10" stroke="#0D5C63" strokeWidth="2" strokeLinecap="round" />
+        {/* checkmark badge */}
+        <circle cx="44" cy="46" r="10" fill="#0D5C63" />
+        <path d="M39 46 L42.5 50 L49 42" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    number: "04",
+    title:  "Secure Capital",
+    desc:   "Connect with the right investors and close funding opportunities.",
+    icon: (
+      // Coin stack + rupee icon
+      <svg viewBox="0 0 64 64" fill="none" style={{ width: 52, height: 52 }} aria-hidden="true">
+        {/* stacked discs */}
+        <ellipse cx="32" cy="50" rx="18" ry="6"  fill="#0D5C63" opacity="0.3" />
+        <ellipse cx="32" cy="44" rx="18" ry="6"  fill="#0D5C63" opacity="0.55" />
+        <ellipse cx="32" cy="38" rx="18" ry="6"  fill="#0D5C63" opacity="0.8" />
+        <rect x="14" y="32" width="36" height="6" fill="#0D5C63" opacity="0.8" />
+        <ellipse cx="32" cy="32" rx="18" ry="6"  fill="#1B7A84" />
+        {/* ₹ coin */}
+        <circle cx="46" cy="20" r="13" fill="#D89B35" />
+        <text x="46" y="25" textAnchor="middle" fontSize="14" fontWeight="700" fill="white">₹</text>
+      </svg>
+    ),
+  },
+];
+
+// ── Step card ─────────────────────────────────────────────────────────────────
+function StepCard({
+  step,
   index,
+  visible,
 }: {
-  service: (typeof services)[0];
+  step: typeof STEPS[0];
   index: number;
+  visible: boolean;
 }) {
-  const [visible, setVisible] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  // Odd index (0, 2) → left; Even index (1, 3) → right
+  const isLeft = index % 2 === 0;
 
   return (
-    <article
-      ref={ref}
-      className="group relative rounded-2xl border p-6 sm:p-7 transition-all duration-400 cursor-default overflow-hidden"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <div
       style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(24px)",
-        transition: `opacity 0.6s ${index * 0.08}s ease, transform 0.6s ${index * 0.08}s ease`,
-        borderColor: hovered ? "rgba(13,92,99,0.3)" : "rgba(220,206,184,0.7)",
-        background: hovered
-          ? "linear-gradient(135deg, #ffffff 0%, rgba(13,92,99,0.03) 100%)"
-          : "white",
-        boxShadow: hovered
-          ? "0 12px 40px rgba(13,18,16,0.10), 0 2px 8px rgba(13,18,16,0.04)"
-          : "none",
+        display:        "flex",
+        flexDirection:  "row",
+        alignItems:     "center",
+        justifyContent: isLeft ? "flex-start" : "flex-end",
+        gap:            0,
+        opacity:        visible ? 1 : 0,
+        transform:      visible ? "none" : `translateY(28px)`,
+        transition:     `opacity 0.65s ${index * 0.15}s ease, transform 0.65s ${index * 0.15}s ease`,
+        position:       "relative",
+        zIndex:         2,
       }}
-      aria-label={service.title}
     >
-      {/* Number */}
-      <div className="flex items-start justify-between mb-5">
-        <span
-          className="text-4xl font-bold transition-colors duration-300"
-          style={{
-            fontFamily: "var(--font-playfair)",
-            color: hovered ? "#0D5C63" : "rgba(220,206,184,0.8)",
-            letterSpacing: "-0.03em",
-          }}
-          aria-hidden="true"
-        >
-          {service.number}
-        </span>
-        {/* Icon/symbol */}
-        <span
-          className="text-2xl transition-all duration-300"
-          style={{
-            color: hovered ? "#0D5C63" : "#C8B99A",
-            transform: hovered ? "scale(1.1) rotate(10deg)" : "scale(1) rotate(0deg)",
-          }}
-          aria-hidden="true"
-        >
-          {service.icon}
-        </span>
-      </div>
-
-      {/* Title */}
-      <h3
-        className="text-lg font-bold text-ink mb-2 transition-colors duration-300 group-hover:text-oak-teal"
-        style={{ fontFamily: "var(--font-playfair)" }}
-      >
-        {service.title}
-      </h3>
-
-      {/* Short description */}
-      <p className="text-sm text-ink-muted leading-relaxed mb-4">{service.description}</p>
-
-      {/* Extended detail — revealed on hover */}
+      {/* Card */}
       <div
-        className="overflow-hidden transition-all duration-300"
         style={{
-          maxHeight: hovered ? "80px" : "0px",
-          opacity: hovered ? 1 : 0,
+          background:   "white",
+          borderRadius: 20,
+          padding:      "clamp(1.25rem, 3vw, 2rem)",
+          boxShadow:    "0 4px 32px rgba(13,18,16,0.07), 0 1px 6px rgba(13,18,16,0.04)",
+          border:       "1px solid rgba(220,206,184,0.5)",
+          width:        "clamp(220px, 52%, 380px)",
+          order:        isLeft ? 1 : 2,
+          flexShrink:   0,
         }}
       >
-        <p className="text-xs text-ink-subtle leading-relaxed border-t border-ivory-sand/60 pt-4">
-          {service.detail}
+        {/* Number + dash */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.6rem" }}>
+          <span style={{
+            fontFamily:    "var(--font-playfair)",
+            fontSize:      "clamp(1.1rem, 2.5vw, 1.5rem)",
+            fontWeight:    700,
+            color:         "#D89B35",
+            letterSpacing: "-0.01em",
+          }}>
+            {step.number}
+          </span>
+          <span style={{ display: "block", width: 24, height: 1.5, background: "#D89B35", borderRadius: 2 }} />
+        </div>
+
+        {/* Title */}
+        <h3 style={{
+          fontFamily:    "var(--font-playfair)",
+          fontSize:      "clamp(1.2rem, 2.5vw, 1.65rem)",
+          fontWeight:    700,
+          color:         "#0D1F2D",
+          lineHeight:    1.15,
+          letterSpacing: "-0.015em",
+          marginBottom:  "0.6rem",
+        }}>
+          {step.title}
+        </h3>
+
+        {/* Description */}
+        <p style={{
+          fontSize:   "clamp(0.82rem, 1.4vw, 0.95rem)",
+          color:      "#4A5868",
+          lineHeight: 1.6,
+        }}>
+          {step.desc}
         </p>
       </div>
 
-      {/* Bottom accent line */}
+      {/* Icon circle — opposite side of card */}
       <div
-        className="absolute bottom-0 left-0 h-0.5 rounded-b-2xl transition-all duration-400"
         style={{
-          width: hovered ? "100%" : "0%",
-          background: "linear-gradient(to right, #0D5C63, #1B7A84)",
+          order:      isLeft ? 2 : 1,
+          flexShrink: 0,
+          /*
+           * Negative margin pulls the icon into the gap between card and path,
+           * overlapping slightly for the "floating disc" look from the reference.
+           */
+          marginLeft:  isLeft  ? "clamp(-2.5rem, -5vw, -3rem)" : "0",
+          marginRight: !isLeft ? "clamp(-2.5rem, -5vw, -3rem)" : "0",
+          position:    "relative",
+          zIndex:      3,
         }}
-        aria-hidden="true"
-      />
-    </article>
+      >
+        {/* Outer shadow disc */}
+        <div style={{
+          width:        "clamp(90px, 14vw, 130px)",
+          height:       "clamp(90px, 14vw, 130px)",
+          borderRadius: "50%",
+          background:   "linear-gradient(145deg, #f0f8fa 0%, #e0eff3 100%)",
+          boxShadow:    "0 8px 28px rgba(13,92,99,0.18), 0 2px 8px rgba(13,92,99,0.10), inset 0 1px 0 rgba(255,255,255,0.9)",
+          display:      "flex",
+          alignItems:   "center",
+          justifyContent: "center",
+          border:       "1.5px solid rgba(13,92,99,0.10)",
+        }}>
+          {step.icon}
+        </div>
+
+        {/* Small dot accent — matches reference */}
+        <div style={{
+          position:     "absolute",
+          top:          4,
+          right:        isLeft ? -8 : "auto",
+          left:         !isLeft ? -8 : "auto",
+          width:        10,
+          height:       10,
+          borderRadius: "50%",
+          background:   "#0D5C63",
+          boxShadow:    "0 0 0 3px rgba(13,92,99,0.15)",
+        }} />
+      </div>
+    </div>
   );
 }
 
+// ── Main section ──────────────────────────────────────────────────────────────
 export default function Services() {
+  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold: 0, rootMargin: "0px 0px -60px 0px" }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <section
       id="services"
-      className="py-section bg-ivory-warm relative overflow-hidden"
-      aria-label="Our Services"
+      ref={ref}
+      className="relative overflow-hidden"
+      style={{ background: "#F8F5EF" }}
+      aria-label="Our Solutions"
     >
-      {/* Background texture */}
+      {/* Subtle dot texture */}
       <div
-        className="absolute inset-0 oak-pattern opacity-60 pointer-events-none"
         aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, rgba(13,92,99,0.06) 1px, transparent 1px)",
+          backgroundSize:  "26px 26px",
+        }}
       />
 
-      <div className="container-site relative">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14">
-          <SectionHeading
-            label="What we offer"
-            title="More than capital."
-            titleHighlight=" Partnership."
-            subtitle="We work alongside founders at every stage — from first cheque to global scale."
-            titleClassName="text-display-lg"
-          />
-        </div>
+      <div className="container-site relative" style={{ paddingTop: "4.5rem", paddingBottom: "5rem" }}>
 
-        {/* Services grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {services.map((service, i) => (
-            <ServiceCard key={service.id} service={service} index={i} />
-          ))}
-        </div>
+        {/* ── Header row ──────────────────────────────────────────────── */}
+        <div
+          style={{
+            display:        "flex",
+            alignItems:     "flex-start",
+            justifyContent: "space-between",
+            gap:            "2rem",
+            marginBottom:   "clamp(3rem, 6vw, 5rem)",
+            opacity:        visible ? 1 : 0,
+            transform:      visible ? "none" : "translateY(16px)",
+            transition:     "opacity 0.6s ease, transform 0.6s ease",
+          }}
+        >
+          {/* Left: label + headline + subtitle */}
+          <div style={{ maxWidth: 580 }}>
+            {/* Label */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
+              <p style={{
+                fontSize:      "0.65rem",
+                fontWeight:    700,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color:         "#0D5C63",
+              }}>
+                Our Solutions
+              </p>
+              {/* Underline bar */}
+              <div style={{ flex: 1, maxWidth: 48, height: 2, background: "#0D5C63", borderRadius: 2 }} />
+            </div>
 
-        {/* CTA strip */}
-        <div className="mt-14 rounded-2xl bg-oak-dark px-8 py-8 sm:px-12 flex flex-col sm:flex-row items-center justify-between gap-5">
-          <div>
-            <h3
-              className="text-xl font-bold text-ivory"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Ready to explore a partnership?
-            </h3>
-            <p className="mt-1 text-sm text-ivory/60">
-              We back founders who think differently and build with conviction.
+            {/* Headline */}
+            <h2 style={{
+              fontFamily:    "var(--font-playfair)",
+              fontSize:      "clamp(2rem, 4.5vw, 3.4rem)",
+              fontWeight:    700,
+              lineHeight:    1.1,
+              letterSpacing: "-0.02em",
+              color:         "#0D1F2D",
+              marginBottom:  "0.9rem",
+            }}>
+              Your Growth<br />Journey. Our Expertise.
+            </h2>
+
+            {/* Subtitle */}
+            <p style={{
+              fontSize:   "clamp(0.9rem, 1.5vw, 1.05rem)",
+              color:      "#4A5868",
+              lineHeight: 1.6,
+            }}>
+              End-to-end business development<br />services for bold founders.
             </p>
           </div>
-          <a
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault();
-              const el = document.getElementById("contact");
-              if (el) {
-                const top = el.getBoundingClientRect().top + window.scrollY - 72;
-                window.scrollTo({ top, behavior: "smooth" });
-              }
-            }}
-            className="flex-shrink-0 group inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 whitespace-nowrap"
+
+          {/* Right: vertical keyword pill */}
+          <div
             style={{
-              background: "linear-gradient(135deg, #D89B35 0%, #E8B555 100%)",
-              color: "#0D1210",
-              boxShadow: "0 4px 16px rgba(216,155,53,0.3)",
+              display:        "flex",
+              flexDirection:  "column",
+              alignItems:     "flex-start",
+              gap:            "0.35rem",
+              paddingLeft:    "1.5rem",
+              borderLeft:     "1.5px solid rgba(13,92,99,0.18)",
+              flexShrink:     0,
+            }}
+            aria-hidden="true"
+          >
+            {["STRATEGY", "CONNECTIONS", "CAPITAL", "IMPACT"].map((kw) => (
+              <span key={kw} style={{
+                fontSize:      "0.62rem",
+                fontWeight:    700,
+                letterSpacing: "0.16em",
+                color:         "#7A8A98",
+              }}>
+                {kw}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* ── S-curve steps ────────────────────────────────────────────── */}
+        <div style={{ position: "relative" }}>
+
+          {/* Dashed S-curve SVG path — decorative, absolutely positioned behind steps */}
+          <svg
+            viewBox="0 0 800 900"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+            style={{
+              position:      "absolute",
+              top:           0,
+              left:          0,
+              width:         "100%",
+              height:        "100%",
+              pointerEvents: "none",
+              zIndex:        1,
             }}
           >
-            Start a conversation
-            <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
+            <path
+              d="M 500 80 C 650 80, 700 220, 550 280 C 400 340, 200 400, 280 520 C 360 640, 650 660, 520 780 C 440 850, 300 870, 280 900"
+              fill="none"
+              stroke="rgba(13,92,99,0.20)"
+              strokeWidth="3"
+              strokeDasharray="10 8"
+              strokeLinecap="round"
+            />
+          </svg>
+
+          {/* Step cards */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "clamp(2rem, 5vw, 3.5rem)" }}>
+            {STEPS.map((step, i) => (
+              <StepCard key={step.number} step={step} index={i} visible={visible} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
